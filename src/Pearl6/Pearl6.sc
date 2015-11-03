@@ -3,7 +3,7 @@ object Pearl6 {
   type Expression = List[Term]
   // multiplication of factors => represents *
   type Term = List[Factor]
-  // concatenation of digits => represents concatenation
+  // concatenation of digits => represents concat
   type Factor = List[Int]
 
   // methods which evaluate a given Factor, Term or an Expression
@@ -14,6 +14,7 @@ object Pearl6 {
                                                   //> valueTerm: (ls: Pearl6.Term)Int
   def valueExpression(ls: Expression): Int =
   	ls.foldLeft(0)((z, x) => valueTerm(x) + z)//> valueExpression: (ls: Pearl6.Expression)Int
+  
   // methods for showing
   def showFactor(ls: Factor) =
   	valueFactor(ls).toString                  //> showFactor: (ls: Pearl6.Factor)String
@@ -21,6 +22,7 @@ object Pearl6 {
   	ls.map(showFactor(_)).mkString(" * ")     //> showTerm: (ls: Pearl6.Term)String
   def showExpression(ls: Expression) =
   	ls.map(showTerm(_)).mkString(" + ")       //> showExpression: (ls: Pearl6.Expression)String
+  
   // TESTING
   val factor = List(1, 2, 3)                      //> factor  : List[Int] = List(1, 2, 3)
   val term = List(factor, List(1, 2))             //> term  : List[List[Int]] = List(List(1, 2, 3), List(1, 2))
@@ -28,10 +30,10 @@ object Pearl6 {
                                                   //| ist(5), List(2)))
 
   showFactor(factor)                              //> res0: String = 123
-  valueFactor(factor)                             //> res1: Int = 123
-  showTerm(term)                                  //> res2: String = 123 * 12
-  valueTerm(term)                                 //> res3: Int = 1476
-  showExpression(expr)                            //> res4: String = 123 * 12 + 5 * 2
+  showTerm(term)                                  //> res1: String = 123 * 12
+  showExpression(expr)                            //> res2: String = 123 * 12 + 5 * 2
+  valueFactor(factor)                             //> res3: Int = 123
+  valueTerm(term)                                 //> res4: Int = 1476
   valueExpression(expr)                           //> res5: Int = 1486
   
   
@@ -54,8 +56,11 @@ object Pearl6 {
   	solve(ls)
   }                                               //> solutions: (ls: List[Int], n: Int)List[Pearl6.Expression]
   
-  solutions(List(1,2,3,4,5,6,7,8,9), 100).map(showExpression(_))
-                                                  //> res6: List[String] = List(1 * 2 * 3 + 4 + 5 + 6 + 7 + 8 * 9, 1 + 2 + 3 + 4 
+  def showSolutions(ls: List[Int], n: Int) = {
+  	solutions(ls, n).map(showExpression(_))
+  }                                               //> showSolutions: (ls: List[Int], n: Int)List[String]
+  // should be 7 results
+  showSolutions(List(1,2,3,4,5,6,7,8,9), 100)     //> res6: List[String] = List(1 * 2 * 3 + 4 + 5 + 6 + 7 + 8 * 9, 1 + 2 + 3 + 4 
                                                   //| + 5 + 6 + 7 + 8 * 9, 1 * 2 * 3 * 4 + 5 + 6 + 7 * 8 + 9, 12 + 3 * 4 + 5 + 6 
                                                   //| + 7 * 8 + 9, 1 + 2 * 3 + 4 + 5 + 67 + 8 + 9, 1 * 2 + 34 + 5 + 6 * 7 + 8 + 9
                                                   //| , 12 + 34 + 5 * 6 + 7 + 8 + 9)

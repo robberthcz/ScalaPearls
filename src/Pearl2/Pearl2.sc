@@ -1,6 +1,4 @@
 object Pearl2_A_surpassing_problem {
-  println("Welcome to the Scala worksheet")       //> Welcome to the Scala worksheet
-  
   // NAIVE SOLUTION //////////////////////////////////
   def tails[T](ls: List[T]): List[List[T]] = ls match {
   	case Nil => Nil
