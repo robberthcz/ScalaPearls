@@ -17,10 +17,25 @@ object Pearl3 {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._
   			 if(f(x, y) == z)      } yield (x, y)
   };System.out.println("""invert1: (f: (Int, Int) => Int, z: Int)List[(Int, Int)]""");$skip(35); val res$1 = 
   
-  invert1( (x, y) => x + y, 10);System.out.println("""res1: List[(Int, Int)] = """ + $show(res$1))}
+  invert1( (x, y) => x + y, 10);System.out.println("""res1: List[(Int, Int)] = """ + $show(res$1));$skip(518); 
   
   // 2nd IMPROVEMENT ////////////////////////////
+  def invert2(f: (Int, Int) => Int, z: Int): List[(Int, Int)] = {
+  	def eliminate(row: Int, col: Int): List[(Int, Int)] = {
+  		val fz = f(row, col)
+  		if(row < 0 || col > z) Nil
+  		// eliminate current row
+  	  else if(fz > z) eliminate(row - 1, col)
+  		// eliminate current row and column
+  		else if(fz == z) (col, row) :: eliminate(row - 1, col + 1)
+  		// fz < z
+  		// eliminate current column
+  		else eliminate(row, col + 1)
+  	}
+  	eliminate(z, 0)
+  };System.out.println("""invert2: (f: (Int, Int) => Int, z: Int)List[(Int, Int)]""");$skip(34); val res$2 = 
   
+  invert2((x,y) => x + y, 10 );System.out.println("""res2: List[(Int, Int)] = """ + $show(res$2))}
   
   
 }
