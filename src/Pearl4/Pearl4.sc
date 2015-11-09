@@ -51,9 +51,9 @@ object Pearl4 {
 				val my = (ys_lo + ys_hi) / 2
 				(xs(mx) < ys(my), n <= mx + my) match {
 					case (true, true) => search(n, xs, ys, xs_lo, xs_hi, ys_lo, my)
-					case (true, false) => search(n - mx - 1, xs, ys, mx, xs_hi, ys_lo, ys_hi)
+					case (true, false) => search(n - mx - 1, xs, ys, mx + 1, xs_hi, ys_lo, ys_hi)
 					case (false, true) => search(n, xs, ys, xs_lo, mx, ys_lo, ys_hi)
-					case (false, false) => search(n - my - 1, xs, ys, xs_lo, xs_hi, my, ys_hi)
+					case (false, false) => search(n - my - 1, xs, ys, xs_lo, xs_hi, my + 1, ys_hi)
 				}
 			}
 		}
@@ -64,9 +64,6 @@ object Pearl4 {
                                                   //> (0, 3), (0, 4), 2
                                                   //| (0, 1), (0, 4), 2
                                                   //| (0, 1), (0, 2), 2
-                                                  //| (0, 1), (0, 2), 1
-                                                  //| (0, 1), (0, 1), 1
-                                                  //| (0, 1), (0, 1), 0
-                                                  //| (0, 0), (0, 1), 0
-                                                  //| res2: Int = 1
+                                                  //| (1, 1), (0, 2), 1
+                                                  //| res2: Int = 3
 }
